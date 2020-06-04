@@ -1,7 +1,6 @@
-package org.zackku.annotaion;
+package org.zackku.xspringboot.mvc.annotaion;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

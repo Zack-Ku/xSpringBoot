@@ -1,9 +1,9 @@
-package org.zackku.client;
+package org.zackku.xspringboot.mvc.client;
 
-import org.zackku.annotaion.XPathParam;
-import org.zackku.annotaion.XRequestBody;
-import org.zackku.annotaion.XRequestMapping;
-import org.zackku.annotaion.XRestController;
+import org.zackku.xspringboot.mvc.annotaion.XPathParam;
+import org.zackku.xspringboot.mvc.annotaion.XRequestBody;
+import org.zackku.xspringboot.mvc.annotaion.XRequestMapping;
+import org.zackku.xspringboot.mvc.annotaion.XRestController;
 
 import java.util.HashMap;
 import java.util.Map;

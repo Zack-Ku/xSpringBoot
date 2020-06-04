@@ -1,4 +1,4 @@
-package org.zackku.client;
+package org.zackku.xspringboot.mvc.client;
 
 /**
  * @author Zack

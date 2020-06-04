@@ -1,4 +1,4 @@
-package org.zackku.annotaion;
+package org.zackku.xspringboot.mvc.annotaion;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

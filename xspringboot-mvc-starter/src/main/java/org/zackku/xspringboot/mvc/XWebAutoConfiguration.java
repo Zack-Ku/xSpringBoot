@@ -1,4 +1,4 @@
-package org.zackku;
+package org.zackku.xspringboot.mvc;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

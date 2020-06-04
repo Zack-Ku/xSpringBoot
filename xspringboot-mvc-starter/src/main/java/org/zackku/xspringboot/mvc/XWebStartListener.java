@@ -1,4 +1,4 @@
-package org.zackku;
+package org.zackku.xspringboot.mvc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,17 +11,16 @@ import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.StopWatch;
-import org.zackku.annotaion.XPathParam;
-import org.zackku.annotaion.XRequestBody;
-import org.zackku.annotaion.XRequestMapping;
-import org.zackku.annotaion.XRestController;
+import org.zackku.xspringboot.mvc.annotaion.XPathParam;
+import org.zackku.xspringboot.mvc.annotaion.XRequestBody;
+import org.zackku.xspringboot.mvc.annotaion.XRequestMapping;
+import org.zackku.xspringboot.mvc.annotaion.XRestController;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -33,8 +32,9 @@ import java.util.Map;
  * @author Zack
  * @date 2020/6/3
  */
+@Slf4j
 public class XWebStartListener implements ApplicationListener<ApplicationReadyEvent> {
-    Logger logger = LoggerFactory.getLogger(XWebStartListener.class);
+    private static final int DEFAULT_PORT = 9099;
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -47,6 +47,7 @@ public class XWebStartListener implements ApplicationListener<ApplicationReadyEv
     public void onApplicationEvent(ApplicationReadyEvent event) {
         Map<String, Object> xControllerMap = applicationContext.getBeansWithAnnotation(XRestController.class);
         if (xControllerMap.isEmpty()) {
+            log.warn("no XRestController here! xSpringBoot web start fail");
             return;
         }
         // process each controller
@@ -71,7 +72,8 @@ public class XWebStartListener implements ApplicationListener<ApplicationReadyEv
         for (String path : pathMethodMap.keySet()) {
             Method method = pathMethodMap.get(path);
             Object object = methodObjectMap.get(method);
-            logger.info("build rest api. path: {} handler: {}.{}", path, object.getClass().getName(), method.getName());
+//            log.info("build rest api. path: {} handler: {}.{}", path, object.getClass().getName(), method.getName());
+            log.info("XSPRINGBOOT build rest api. path: {} handler: {}.{}", path, object.getClass().getName(), method.getName());
             routers.route(path).handler(routingContext -> {
                 StopWatch sw = new StopWatch();
                 sw.start();
@@ -81,23 +83,24 @@ public class XWebStartListener implements ApplicationListener<ApplicationReadyEv
                     String resultStr = objectMapper.writeValueAsString(result);
                     response.end(resultStr);
                 } catch (Exception e) {
-                    logger.error("method invoke", e);
+                    log.error("method invoke", e);
                     throw new RuntimeException();
                 }
                 sw.stop();
                 long cost = sw.getTotalTimeNanos() / 1000;
                 if (cost > 1000) {
-                    logger.info("process path:{}  cost:{} ms", path, cost / 1000);
+                    log.info("XSPRINGBOOT process path: {}  cost:{} ms", path, cost / 1000);
                 } else {
-                    logger.info("process path:{}  cost:{} μs", path, cost);
+                    log.info("XSPRINGBOOT process path: {}  cost:{} μs", path, cost);
                 }
             });
         }
         HttpServer server = vertx.createHttpServer();
 
         String port = applicationContext.getEnvironment().getProperty("xserver.port");
-        int portInt = port == null ? 8080 : Integer.parseInt(port);
+        int portInt = port == null ? DEFAULT_PORT : Integer.parseInt(port);
         server.requestHandler(routers).listen(portInt);
+        log.info("XSPRINGBOOT start succeed on port: {} !!", portInt);
     }
 
     private Object invokeMethod(RoutingContext routingContext, Method method, Object object) throws InvocationTargetException, IllegalAccessException, JsonProcessingException {
