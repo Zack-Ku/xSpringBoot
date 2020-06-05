@@ -3,10 +3,10 @@ A simple and efficient async web framework. Just use Spring code style to write 
 
 
 # Quick Start
-1. Import jar in maven.
+1. Import jar in maven. (Very coming soon)
 ````
     <dependency>
-        <groupId>org.zackku</groupId>
+        <groupId>com.zackku</groupId>
         <artifactId>xspringboot-mvc-starter</artifactId>
         <version>${xspringboot.version}</version>
     </dependency>
@@ -50,4 +50,6 @@ public class TestController {
 2020-06-04 14:27:33.374  INFO 23853 --- [           main] o.z.xspringboot.mvc.XWebStartListener    : XSPRINGBOOT start succeed on port:9099 !!
 2020-06-04 14:42:44.854  INFO 23949 --- [ntloop-thread-1] o.z.xspringboot.mvc.XWebStartListener    : XSPRINGBOOT process path: /xspringboot/test  cost:376 μs
 ````
+
+More detail in [DemoProject](https://github.com/Zack-Ku/xSpringBoot-Demo).
 

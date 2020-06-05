@@ -6,12 +6,13 @@
     <modules>
         <module>xspringboot-mvc-starter</module>
     </modules>
-    <groupId>org.zackku</groupId>
+    <groupId>com.zackku</groupId>
     <artifactId>xspringboot-project</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1-RELEASE</version>
     <name>xspringboot-project</name>
     <description>A simple and efficient async web framework. Just use Spring code style to write Vertx project !
     </description>
+    <url>https://zackku.com</url>
 
     <properties>
         <java.version>1.8</java.version>
@@ -84,6 +85,79 @@
                     <generateBackupPoms>false</generateBackupPoms>
                 </configuration>
             </plugin>
+            <!-- GPG mvn clean deploy -P release -Dgpg.passphrase=YourPassphase -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <show>private</show>
+                    <nohelp>true</nohelp>
+                    <charset>UTF-8</charset>
+                    <encoding>UTF-8</encoding>
+                    <docencoding>UTF-8</docencoding>
+                    <!-- TODO 临时解决不规范的javadoc生成报错,后面要规范化后把这行去掉 -->
+                    <additionalparam>-Xdoclint:none</additionalparam>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/Zack-Ku/xSpringBoot.git</url>
+        <connection>https://github.com/Zack-Ku/xSpringBoot.git</connection>
+        <developerConnection>https://zackku.com</developerConnection>
+    </scm>
+
+    <developers>
+        <developer>
+            <name>Zack Ku</name>
+            <email>gza_scnu@163.com</email>
+            <organization>zackkustudio</organization>
+            <url>https://zackku.com</url>
+        </developer>
+    </developers>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <name>OSS Snapshots Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <name>OSS Staging Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
+        </repository>
+    </distributionManagement>
+
+
 </project>

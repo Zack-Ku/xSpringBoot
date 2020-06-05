@@ -1,4 +1,4 @@
-package org.zackku.xspringboot.mvc.annotaion;
+package com.zackku.xspringboot.mvc.annotaion;
 
 import org.springframework.core.annotation.AliasFor;
 

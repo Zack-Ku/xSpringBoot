@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-org.zackku.xspringboot.mvc.XWebAutoConfiguration
+com.zackku.xspringboot.mvc.XWebAutoConfiguration

@@ -1,4 +1,4 @@
-package org.zackku.xspringboot.mvc;
+package com.zackku.xspringboot.mvc;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,10 +17,10 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.StopWatch;
-import org.zackku.xspringboot.mvc.annotaion.XPathParam;
-import org.zackku.xspringboot.mvc.annotaion.XRequestBody;
-import org.zackku.xspringboot.mvc.annotaion.XRequestMapping;
-import org.zackku.xspringboot.mvc.annotaion.XRestController;
+import com.zackku.xspringboot.mvc.annotaion.XPathParam;
+import com.zackku.xspringboot.mvc.annotaion.XRequestBody;
+import com.zackku.xspringboot.mvc.annotaion.XRequestMapping;
+import com.zackku.xspringboot.mvc.annotaion.XRestController;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

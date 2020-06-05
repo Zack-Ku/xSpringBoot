@@ -1,4 +1,4 @@
-package org.zackku.xspringboot.mvc.annotaion;
+package com.zackku.xspringboot.mvc.annotaion;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface XRequestBody {
+public @interface XPathParam {
 }
