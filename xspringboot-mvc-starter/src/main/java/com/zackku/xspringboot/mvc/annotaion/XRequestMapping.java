@@ -1,5 +1,6 @@
 package com.zackku.xspringboot.mvc.annotaion;
 
+import io.vertx.core.http.HttpMethod;
 import org.springframework.core.annotation.AliasFor;
 
 import java.lang.annotation.ElementType;
@@ -20,5 +21,5 @@ public @interface XRequestMapping {
     @AliasFor("value")
     String[] path() default {};
 
-//    HttpMethod[] method() default {};
+    HttpMethod[] method() default {};
 }

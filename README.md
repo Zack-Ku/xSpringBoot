@@ -3,7 +3,7 @@ A simple and efficient async web framework. Just use Spring code style to write 
 
 
 # Quick Start
-1. Import jar in maven. (Very coming soon)
+1. Import jar in maven. 
 ````
     <dependency>
         <groupId>com.zackku</groupId>
@@ -28,7 +28,7 @@ public class Application {
 @XRequestMapping("/xspringboot")
 public class TestController {
 
-    @XRequestMapping("/test")
+    @XRequestMapping("/test", method = HttpMethod.POST)
     public Map<String, Object> c(@XRequestBody TestReq req, @XPathParam TestReq req2) {
         Map<String, Object> t = new HashMap<>();
         t.put("kkk", 1);

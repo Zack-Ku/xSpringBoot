@@ -8,7 +8,7 @@
     </modules>
     <groupId>com.zackku</groupId>
     <artifactId>xspringboot-project</artifactId>
-    <version>1.0.1-RELEASE</version>
+    <version>1.0.2</version>
     <name>xspringboot-project</name>
     <description>A simple and efficient async web framework. Just use Spring code style to write Vertx project !
     </description>

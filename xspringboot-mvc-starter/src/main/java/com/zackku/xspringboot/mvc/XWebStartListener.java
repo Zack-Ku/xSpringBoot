@@ -3,11 +3,17 @@ package com.zackku.xspringboot.mvc;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.zackku.xspringboot.mvc.annotaion.XPathParam;
+import com.zackku.xspringboot.mvc.annotaion.XRequestBody;
+import com.zackku.xspringboot.mvc.annotaion.XRequestMapping;
+import com.zackku.xspringboot.mvc.annotaion.XRestController;
 import io.vertx.core.MultiMap;
 import io.vertx.core.Vertx;
+import io.vertx.core.http.HttpMethod;
 import io.vertx.core.http.HttpServer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.JsonObject;
+import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import io.vertx.ext.web.handler.BodyHandler;
@@ -17,10 +23,6 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationListener;
 import org.springframework.util.StopWatch;
-import com.zackku.xspringboot.mvc.annotaion.XPathParam;
-import com.zackku.xspringboot.mvc.annotaion.XRequestBody;
-import com.zackku.xspringboot.mvc.annotaion.XRequestMapping;
-import com.zackku.xspringboot.mvc.annotaion.XRestController;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -42,6 +44,7 @@ public class XWebStartListener implements ApplicationListener<ApplicationReadyEv
     private ObjectMapper objectMapper;
 
     Map<String, Method> pathMethodMap = new HashMap<>(30);
+    Map<String, HttpMethod[]> pathHttpMethodsMap = new HashMap<>(30);
     Map<Method, Object> methodObjectMap = new HashMap<>(30);
 
     public void onApplicationEvent(ApplicationReadyEvent event) {
@@ -74,7 +77,14 @@ public class XWebStartListener implements ApplicationListener<ApplicationReadyEv
             Object object = methodObjectMap.get(method);
 //            log.info("build rest api. path: {} handler: {}.{}", path, object.getClass().getName(), method.getName());
             log.info("XSPRINGBOOT build rest api. path: {} handler: {}.{}", path, object.getClass().getName(), method.getName());
-            routers.route(path).handler(routingContext -> {
+            HttpMethod[] httpMethods = pathHttpMethodsMap.get(path);
+            Route r = routers.route(path);
+            if (httpMethods.length != 0) {
+                for (HttpMethod httpMethod : httpMethods) {
+                    r = r.method(httpMethod);
+                }
+            }
+            r.handler(routingContext -> {
                 StopWatch sw = new StopWatch();
                 sw.start();
                 HttpServerResponse response = routingContext.response();
@@ -135,6 +145,7 @@ public class XWebStartListener implements ApplicationListener<ApplicationReadyEv
                     throw new RuntimeException();
                 }
                 pathMethodMap.putIfAbsent(path, method);
+                pathHttpMethodsMap.put(path, methodRM != null ? methodRM.method() : new HttpMethod[0]);
             }
         }
     }
